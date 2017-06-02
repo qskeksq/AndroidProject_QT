@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">메모</string>
+    <string name="title_activity_list">ListActivity</string>
+</resources>
