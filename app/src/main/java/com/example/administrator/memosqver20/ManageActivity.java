@@ -13,19 +13,20 @@ public class ManageActivity extends AppCompatActivity implements ManageInterface
 
     DetailFragment detailFragment;
     ListFragment listFragment;
-    boolean convert = true;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage);
 
-        // 얘는 xml 에서 <fragment .../> 임. 다만 이런식으로 새로 값을 넣어서 쓸 수도 있구나!!
-//        fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         init();
+
     }
 
     public void init(){
+
         listFragment = new ListFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, listFragment).commit();
     }
@@ -37,7 +38,6 @@ public class ManageActivity extends AppCompatActivity implements ManageInterface
         Bundle args =  new Bundle();  // 아하!!!!!!! 그냥이라도 getArgument 하려면 일단 bundle 에 값을 넣어 전달해야 하는구나!!
         detailFragment.setArguments(args); // 아하!!!!!! 애초에 그곳에서는 intent 에서 값을 빼내서 전달하는 방식아라 근본이 다름
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailFragment).commit();
-        convert = true;
     }
 
     // 데이터를 담아 보냄 -- 상세보기 창
@@ -48,9 +48,6 @@ public class ManageActivity extends AppCompatActivity implements ManageInterface
         detailFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailFragment).commit();
     }
-
-
-
 
 
 }

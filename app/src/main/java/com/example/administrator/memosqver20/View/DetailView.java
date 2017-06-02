@@ -85,88 +85,11 @@ public class DetailView implements View.OnClickListener, View.OnLongClickListene
         fab.setOnClickListener(this);                // 클립보드로 복사 리스너
         fab.setOnLongClickListener(this);            // 클립보드 복사 취소 리스너
         txt_detail_week.addTextChangedListener(weekListener);
-        txt_detail_qt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fragment.setQTData(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        txt_detail_thanks.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fragment.setThanksData(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        txt_detail_prayer.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fragment.setPrayerData(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        txt_detail_journal.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fragment.setJournalData(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        txt_detail_qt.addTextChangedListener(QTWatcher);
+        txt_detail_thanks.addTextChangedListener(thanksWatcher);
+        txt_detail_prayer.addTextChangedListener(prayerWatcher);
+        txt_detail_journal.addTextChangedListener(journalWatcher);
     }
-
-    private TextWatcher weekListener = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            fragment.setWeekData(s.toString());
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
 
     // 2.1      -- 콜백 클릭 메소드
     @Override
@@ -194,6 +117,88 @@ public class DetailView implements View.OnClickListener, View.OnLongClickListene
         }
         return false;
     }
+
+    // 2.3      -- 콜백 텍스트 변화 메소드
+    private TextWatcher weekListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            fragment.setWeekData(s.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    private TextWatcher QTWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            fragment.setQTData(s.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    private TextWatcher thanksWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            fragment.setThanksData(s.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    private TextWatcher prayerWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            fragment.setPrayerData(s.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    private TextWatcher journalWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            fragment.setJournalData(s.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 //--------------------------------------------------------------------------------------------------
 //   3. set 메소드
@@ -227,7 +232,6 @@ public class DetailView implements View.OnClickListener, View.OnLongClickListene
         txt_detail_thanks.setEnabled(true);
         btn_add_prayer.setEnabled(true);
         txt_detail_journal.setEnabled(true);
-        // 어차피 편집 가능 모드에서 + 버튼을 누를 수 있으니까 안 보여도 됨
         btn_add_thanks.setEnabled(true);
         btn_add_prayer.setEnabled(true);
     }
@@ -308,7 +312,7 @@ public class DetailView implements View.OnClickListener, View.OnLongClickListene
         dialog.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DataLab.getLab(view.getContext()).delete(memo); // TODO 뺴주기
+                DataLab.getLab(fragment.getContext()).delete(memo); // TODO 뺴주기
                 fragment.to_ListFragment();
             }
         });
@@ -317,7 +321,7 @@ public class DetailView implements View.OnClickListener, View.OnLongClickListene
 
     // 저장 여부 묻기
     public void askSave(final Memo memo){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+        AlertDialog.Builder dialog = new AlertDialog.Builder(fragment.getContext());
         dialog.setTitle("저장하시겠습니까?");
         dialog.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
             @Override
@@ -328,7 +332,7 @@ public class DetailView implements View.OnClickListener, View.OnLongClickListene
         dialog.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DataLab.getLab(view.getContext()).add(memo); // TODO 뺴주기
+                DataLab.getLab(fragment.getContext()).add(memo); // TODO 뺴주기
                 fragment.to_ListFragment();
             }
         });
@@ -363,7 +367,5 @@ public class DetailView implements View.OnClickListener, View.OnLongClickListene
     public void setDate(String time){
         date.setText(time);
     }
-
-
 
 }

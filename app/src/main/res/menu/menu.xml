@@ -15,7 +15,6 @@
         android:title="edit"
         app:showAsAction="always" />
 
-
     <item
         android:id="@+id/copy"
         android:title="COPY"
@@ -26,6 +25,5 @@
         android:id="@+id/delete"
         android:title="DELETE"
         app:showAsAction="never" />
-
 
 </menu>
